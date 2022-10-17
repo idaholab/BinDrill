@@ -1,0 +1,15 @@
+mapping_file="./mapping.sqlite"
+milvus_host="127.0.0.1"
+milvus_port="19530"
+function_groups_file="./func_groups.json"
+binarydriller_host="0.0.0.0"
+binarydriller_port=5567
+func_limit=2000
+gradient_range = [1.0, 0.99]
+
+
+[orientdb]
+host="localhost"
+port=2480
+user="root"
+pass="root"

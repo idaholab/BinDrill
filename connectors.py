@@ -131,7 +131,7 @@ class SqliteTroglodyteSearchConnector(TroglodyteSearchConnector):
         
 
     @timing
-    def search(self, bin_embeddings, *args, exclude_bin=None, topk=5, func_filter=None, **kwargs):
+    def search(self, bin_embeddings, *args, topk=5, func_filter=None, **kwargs):
         bin_embeddings_full = sorted(bin_embeddings, key=lambda x: x.function_ref.address)
         compare_embeddings_full = self.MC_compare.get_embeddings(func_filter=func_filter, **kwargs)
         bin_embeddings = [
@@ -154,7 +154,9 @@ class SqliteTroglodyteSearchConnector(TroglodyteSearchConnector):
             k=[]
             for index2, score in enumerate(row):
                 act_index = topk_embeds[1][index][index2]
-                d = self.format_func_data(compare_embeddings_full[index2])
+                # print(compare_embeddings_full[index2].function_ref.function, act_index)
+                #this is the problem
+                d = self.format_func_data(compare_embeddings_full[act_index])
                 d["score"] = score.item()
                 k.append(d)
             l.append((self.format_func_data(bin_embeddings_full[index]), k))
@@ -190,7 +192,11 @@ class SqliteDiscoSearchConnector(EmbedSearchConnector):
             "vex"
         ]
         if orientdb_db is not None:
-            self.orient_con = RestAPIWrapper(db=orientdb_db, host=self.orientdb_host, port=self.orientdb_port, user=self.orientdb_user, password=self.orientdb_pass)
+            try:
+                self.orient_con = RestAPIWrapper(db=orientdb_db, host=self.orientdb_host, port=self.orientdb_port, user=self.orientdb_user, password=self.orientdb_pass)
+            except Exception as e:
+                self.orient_con = None
+                logging.exception(e)
         self.direct_fields = ["address", "bytes", "blocks"]
         self.id = None
         self.MC = None

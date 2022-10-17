@@ -5,7 +5,7 @@ COPY analysis ./analysis
 COPY *.py ./
 COPY pyproject.toml .
 COPY poetry.lock .
-
+COPY config.toml config.toml
 
 RUN apt install g++ gcc libc6-dev make
 RUN apt install libffi-dev

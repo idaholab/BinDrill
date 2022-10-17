@@ -46,7 +46,12 @@ server = Flask(__name__)
 
 if 'orientdb' in config:
     orient_conf = config['orientdb']
-    databases = RestAPIWrapper(host=orient_conf['host'], port=orient_conf['port'], user=orient_conf['user'], password=orient_conf['pass']).listDatabases()
+    try:
+        databases = RestAPIWrapper(host=orient_conf['host'], port=orient_conf['port'], user=orient_conf['user'], password=orient_conf['pass']).listDatabases()
+        if databases is None:
+            databases = []
+    except:
+        databases = []
 
 
 if os.path.exists(config['function_groups_file']):
