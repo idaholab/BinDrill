@@ -199,7 +199,7 @@ def gen_settings():
             ),
             gen_setting(
                 "dropdown",
-                options=databases,
+                options=[],
                 label="OrientDB Database",
                 _id="input_orientdb_database",
                 required=False,
@@ -279,7 +279,7 @@ def gen_settings():
             gen_setting(
                 "dropdown",
                 label="OrientDB Database",
-                options=databases,
+                options=[],
                 _id="compare_orientdb_database",
                 required=False,
                 default="---",

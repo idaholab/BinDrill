@@ -47,10 +47,11 @@ class EmbedSearchConnector:
         if config is not None:
             self.milvus_port =  config['milvus_port']
             self.milvus_host = config['milvus_host']
-            self.orientdb_host = config['orientdb']['host']
-            self.orientdb_port = config['orientdb']['port']
-            self.orientdb_user = config['orientdb']['user']
-            self.orientdb_pass = config['orientdb']['pass']
+            if 'orientdb' in config:
+                self.orientdb_host = config['orientdb']['host']
+                self.orientdb_port = config['orientdb']['port']
+                self.orientdb_user = config['orientdb']['user']
+                self.orientdb_pass = config['orientdb']['pass']
             self.mapping_file = config['mapping_file']
             self.function_groups_file = config['function_groups_file']
             self.limit = config['func_limit']
